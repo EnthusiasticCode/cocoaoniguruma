@@ -19,6 +19,8 @@
 
 - (NSMutableArray*) captureNameArray;
 
+int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, int* group_list, OnigRegex re, void* arg);
+
 @end
 
 
@@ -37,14 +39,6 @@
 - (void)dealloc
 {
     if (_entity) onig_free(_entity);
-    [_expression release];
-    [super dealloc];
-}
-
-- (void)finalize
-{
-    if (_entity) onig_free(_entity);
-    [super finalize];
 }
 
 + (OnigRegexp*)compile:(NSString*)expression
@@ -123,7 +117,7 @@
                           &err);
     
     if (status == ONIG_NORMAL) {
-        return [[[self alloc] initWithEntity:entity expression:expression] autorelease];
+        return [[self alloc] initWithEntity:entity expression:expression];
     }
     else {
         if(error != NULL) {
@@ -168,7 +162,7 @@
                              ONIG_OPTION_NONE);
     
     if (status != ONIG_MISMATCH) {
-        return [[[OnigResult alloc] initWithRegexp:self region:region target:target] autorelease];
+        return [[OnigResult alloc] initWithRegexp:self region:region target:target];
     }
     else {
         onig_region_free(region, 1);
@@ -201,7 +195,7 @@
                             ONIG_OPTION_NONE);
     
     if (status != ONIG_MISMATCH) {
-        return [[[OnigResult alloc] initWithRegexp:self region:region target:target] autorelease];
+        return [[OnigResult alloc] initWithRegexp:self region:region target:target];
     }
     else {
         onig_region_free(region, 1);
@@ -228,7 +222,7 @@
 {
     self = [super init];
     if (self) {
-        _expression = [expression retain];
+        _expression = expression;
         _region = region;
         _target = [target copy];
         _captureNames = [NSMutableArray array];
@@ -238,16 +232,7 @@
 
 - (void)dealloc
 {
-    [_expression release];
     if (_region) onig_region_free(_region, 1);
-    [_target release];
-    [super dealloc];
-}
-
-- (void)finalize
-{
-    if (_region) onig_region_free(_region, 1);
-    [super finalize];
 }
 
 - (NSString*)target
@@ -321,7 +306,7 @@
 
 // Used to get list of names
 int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, int* group_list, OnigRegex re, void* arg) {
-    OnigResult *result = (OnigResult *)arg;
+    OnigResult *result = (__bridge OnigResult *)arg;
     
     [[result captureNameArray] addObject:[NSString stringWithCharacters:(unichar*)name length:((end-name)/CHAR_SIZE)]];
     return 0;
@@ -329,7 +314,7 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 
 - (NSArray*)captureNames
 {
-    onig_foreach_name([self->_expression entity], co_name_callback, self);
+    onig_foreach_name([self->_expression entity], co_name_callback, (__bridge void*)self);
     return [NSArray arrayWithArray:self->_captureNames];
 }
 

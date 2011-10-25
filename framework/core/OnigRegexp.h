@@ -3,7 +3,6 @@
 
 #import <Foundation/Foundation.h>
 #import "oniguruma.h"
-#import "OnigRegexpUtility.h"
 
 
 @class OnigResult;
