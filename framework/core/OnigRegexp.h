@@ -26,7 +26,7 @@ typedef enum {
     OnigOptionMaxbit = ONIG_OPTION_MAXBIT
 } OnigOption;
 
-@interface OnigRegexp : NSObject
+@interface OnigRegexp : NSObject <NSCopying>
 {
     regex_t* _entity;
     NSString* _expression;
@@ -56,7 +56,7 @@ typedef enum {
 @end
 
 
-@interface OnigResult : NSObject
+@interface OnigResult : NSObject <NSCopying>
 {
     OnigRegexp* _expression;
     OnigRegion* _region;

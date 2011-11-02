@@ -41,6 +41,16 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     if (_entity) onig_free(_entity);
 }
 
+- (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+- (NSUInteger)hash
+{
+    return [_expression hash];
+}
+
 + (OnigRegexp*)compile:(NSString*)expression
 {
     return [self compile:expression ignorecase:NO multiline:NO extended:NO error:NULL];
@@ -233,6 +243,16 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 - (void)dealloc
 {
     if (_region) onig_region_free(_region, 1);
+}
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return self;
+}
+
+- (NSUInteger)hash
+{
+    return [_expression hash];
 }
 
 - (NSString*)target
