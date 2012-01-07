@@ -160,23 +160,32 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     if (!target) return nil;
     if (end < 0) end = [target length];
     
-    OnigRegion* region = onig_region_new();
-    const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
-    
-    int status = onig_search(_entity,
-                             str,
-                             str + [target length] * CHAR_SIZE,
-                             str + start * CHAR_SIZE,
-                             str + end * CHAR_SIZE,
-                             region,
-                             ONIG_OPTION_NONE);
-    
-    if (status != ONIG_MISMATCH) {
-        return [[OnigResult alloc] initWithRegexp:self region:region target:target];
-    }
-    else {
-        onig_region_free(region, 1);
-        return nil;
+#warning TODO URI fix this dirty workaround
+    // This autorelease pool is needed because creating a result copies the entire contents to a C string, which gets freed when the string it's created from is release, or when the autoreleasepool is flushed.
+    // However, even though it keeps the memory live, if you create another C string it will get copied again, and keep both strings alive.
+    // The method in question is -[NSString cStringUsingEncoding:]
+    // The autorelease pool does not fix the excessive copying, but it does make sure the allocated memory does not accumulate
+    @autoreleasepool
+    {
+        
+        OnigRegion* region = onig_region_new();
+        const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
+        
+        int status = onig_search(_entity,
+                                 str,
+                                 str + [target length] * CHAR_SIZE,
+                                 str + start * CHAR_SIZE,
+                                 str + end * CHAR_SIZE,
+                                 region,
+                                 ONIG_OPTION_NONE);
+        
+        if (status != ONIG_MISMATCH) {
+            return [[OnigResult alloc] initWithRegexp:self region:region target:target];
+        }
+        else {
+            onig_region_free(region, 1);
+            return nil;
+        }
     }
 }
 
@@ -194,22 +203,31 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 {
     if (!target) return nil;
     
-    OnigRegion* region = onig_region_new();
-    const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
-    
-    int status = onig_match(_entity,
-                            str,
-                            str + [target length] * CHAR_SIZE,
-                            str + start * CHAR_SIZE,
-                            region,
-                            ONIG_OPTION_NONE);
-    
-    if (status != ONIG_MISMATCH) {
-        return [[OnigResult alloc] initWithRegexp:self region:region target:target];
-    }
-    else {
-        onig_region_free(region, 1);
-        return nil;
+#warning TODO URI fix this dirty workaround
+    // This autorelease pool is needed because creating a result copies the entire contents to a C string, which gets freed when the string it's created from is release, or when the autoreleasepool is flushed.
+    // However, even though it keeps the memory live, if you create another C string it will get copied again, and keep both strings alive.
+    // The method in question is -[NSString cStringUsingEncoding:]
+    // The autorelease pool does not fix the excessive copying, but it does make sure the allocated memory does not accumulate
+    @autoreleasepool
+    {
+        
+        OnigRegion* region = onig_region_new();
+        const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
+        
+        int status = onig_match(_entity,
+                                str,
+                                str + [target length] * CHAR_SIZE,
+                                str + start * CHAR_SIZE,
+                                region,
+                                ONIG_OPTION_NONE);
+        
+        if (status != ONIG_MISMATCH) {
+            return [[OnigResult alloc] initWithRegexp:self region:region target:target];
+        }
+        else {
+            onig_region_free(region, 1);
+            return nil;
+        }
     }
 }
 
