@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "OnigRegexp.h"
+#import <objc/runtime.h>
 
 
 #define CHAR_SIZE 2
@@ -12,6 +13,48 @@
 
 #define STRING_ENCODING NSUTF16LittleEndianStringEncoding
 #define ONIG_ENCODING ONIG_ENCODING_UTF16_LE
+
+
+static const void *_cStringWrapperKey;
+
+@interface CStringWrapper : NSObject
+{
+    char *_cString;
+}
+- (id)initWithString:(NSString *)string encoding:(NSStringEncoding)encoding;
+- (const char *)cString;
+@end
+
+@implementation CStringWrapper
+
+- (id)initWithString:(NSString *)string encoding:(NSStringEncoding)encoding
+{
+    self = [super init];
+    if (!self)
+        return nil;
+    NSUInteger length = [string maximumLengthOfBytesUsingEncoding:encoding] + 1;
+    if (!length)
+        return nil;
+    _cString = malloc(length * sizeof(char));
+    if (![string getCString:_cString maxLength:length encoding:encoding])
+    {
+        free(_cString);
+        return nil;
+    }
+    return self;
+}
+
+- (void)dealloc
+{
+    free(_cString);
+}
+
+- (const char *)cString
+{
+    return _cString;
+}
+
+@end
 
 
 @interface OnigResult (Private)
@@ -160,32 +203,29 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     if (!target) return nil;
     if (end < 0) end = [target length];
     
-#warning TODO URI fix this dirty workaround
-    // This autorelease pool is needed because creating a result copies the entire contents to a C string, which gets freed when the string it's created from is release, or when the autoreleasepool is flushed.
-    // However, even though it keeps the memory live, if you create another C string it will get copied again, and keep both strings alive.
-    // The method in question is -[NSString cStringUsingEncoding:]
-    // The autorelease pool does not fix the excessive copying, but it does make sure the allocated memory does not accumulate
-    @autoreleasepool
+    OnigRegion* region = onig_region_new();
+    CStringWrapper *wrapper = objc_getAssociatedObject(target, _cStringWrapperKey);
+    if (!wrapper)
     {
-        
-        OnigRegion* region = onig_region_new();
-        const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
-        
-        int status = onig_search(_entity,
-                                 str,
-                                 str + [target length] * CHAR_SIZE,
-                                 str + start * CHAR_SIZE,
-                                 str + end * CHAR_SIZE,
-                                 region,
-                                 ONIG_OPTION_NONE);
-        
-        if (status != ONIG_MISMATCH) {
-            return [[OnigResult alloc] initWithRegexp:self region:region target:target];
-        }
-        else {
-            onig_region_free(region, 1);
-            return nil;
-        }
+        wrapper = [[CStringWrapper alloc] initWithString:target encoding:STRING_ENCODING];
+        objc_setAssociatedObject(target, _cStringWrapperKey, wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    const UChar* str = (const UChar*)[wrapper cString];
+    
+    int status = onig_search(_entity,
+                             str,
+                             str + [target length] * CHAR_SIZE,
+                             str + start * CHAR_SIZE,
+                             str + end * CHAR_SIZE,
+                             region,
+                             ONIG_OPTION_NONE);
+    
+    if (status != ONIG_MISMATCH) {
+        return [[OnigResult alloc] initWithRegexp:self region:region target:target];
+    }
+    else {
+        onig_region_free(region, 1);
+        return nil;
     }
 }
 
@@ -203,31 +243,28 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 {
     if (!target) return nil;
     
-#warning TODO URI fix this dirty workaround
-    // This autorelease pool is needed because creating a result copies the entire contents to a C string, which gets freed when the string it's created from is release, or when the autoreleasepool is flushed.
-    // However, even though it keeps the memory live, if you create another C string it will get copied again, and keep both strings alive.
-    // The method in question is -[NSString cStringUsingEncoding:]
-    // The autorelease pool does not fix the excessive copying, but it does make sure the allocated memory does not accumulate
-    @autoreleasepool
+    OnigRegion* region = onig_region_new();
+    CStringWrapper *wrapper = objc_getAssociatedObject(target, _cStringWrapperKey);
+    if (!wrapper)
     {
-        
-        OnigRegion* region = onig_region_new();
-        const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
-        
-        int status = onig_match(_entity,
-                                str,
-                                str + [target length] * CHAR_SIZE,
-                                str + start * CHAR_SIZE,
-                                region,
-                                ONIG_OPTION_NONE);
-        
-        if (status != ONIG_MISMATCH) {
-            return [[OnigResult alloc] initWithRegexp:self region:region target:target];
-        }
-        else {
-            onig_region_free(region, 1);
-            return nil;
-        }
+        wrapper = [[CStringWrapper alloc] initWithString:target encoding:STRING_ENCODING];
+        objc_setAssociatedObject(target, _cStringWrapperKey, wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    }
+    const UChar* str = (const UChar*)[wrapper cString];
+    
+    int status = onig_match(_entity,
+                            str,
+                            str + [target length] * CHAR_SIZE,
+                            str + start * CHAR_SIZE,
+                            region,
+                            ONIG_OPTION_NONE);
+    
+    if (status != ONIG_MISMATCH) {
+        return [[OnigResult alloc] initWithRegexp:self region:region target:target];
+    }
+    else {
+        onig_region_free(region, 1);
+        return nil;
     }
 }
 
