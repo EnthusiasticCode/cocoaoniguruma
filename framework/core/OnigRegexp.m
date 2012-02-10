@@ -14,6 +14,8 @@
 #define STRING_ENCODING NSUTF16LittleEndianStringEncoding
 #define ONIG_ENCODING ONIG_ENCODING_UTF16_LE
 
+static OnigRegexp *_numberedCapturesRegexp;
+static OnigRegexp *_namedCapturesRegexp;
 
 static const void *_cStringWrapperKey;
 
@@ -68,6 +70,14 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 
 
 @implementation OnigRegexp
+
++ (void)initialize
+{
+    if (self != [OnigRegexp class])
+        return;
+    _numberedCapturesRegexp = [OnigRegexp compile:@"\\([1-9])"];
+    _namedCapturesRegexp = [OnigRegexp compile:@"\\k<(.*?)>"];
+}
 
 - (id)initWithEntity:(regex_t*)entity expression:(NSString*)expression
 {
@@ -268,6 +278,21 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     }
 }
 
+- (void)gsub:(NSMutableString *)target block:(NSString *(^)(OnigResult *))block
+{
+    NSUInteger start = 0;
+    OnigResult *result = [self search:target start:start];
+    while (result)
+    {
+        NSString *replacement = block(result);
+        if (replacement)
+            [target replaceCharactersInRange:[result bodyRange] withString:replacement];
+        else
+            [target deleteCharactersInRange:[result bodyRange]];            
+        start += [replacement length];
+    }
+}
+
 - (NSString*)expression
 {
     return _expression;
@@ -432,6 +457,27 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
         [array addObject:[self stringAt:i]];
     }
     return array;
+}
+
+- (NSString *)stringForReplacementTemplate:(NSString *)replacementTemplate
+{
+    NSMutableString *replacement = [replacementTemplate mutableCopy];
+    [_numberedCapturesRegexp gsub:replacement block:^NSString *(OnigResult *result) {
+        int captureNumber = [[result stringAt:1] intValue];
+        if (captureNumber >= 0 && [self count] > captureNumber)
+            return [self stringAt:captureNumber];
+        else
+            return nil;
+    }];
+    [_namedCapturesRegexp gsub:replacement block:^NSString *(OnigResult *result) {
+        NSString *captureName = [result stringAt:1];
+        int captureNumber = [self indexForName:captureName];
+        if (captureNumber >= 0 && [self count] > captureNumber)
+            return [self stringAt:captureNumber];
+        else
+            return nil;
+    }];
+    return [replacement copy];
 }
 
 @end

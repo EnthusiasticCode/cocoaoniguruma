@@ -51,6 +51,8 @@ typedef enum {
 - (OnigResult*)match:(NSString*)target;
 - (OnigResult*)match:(NSString*)target start:(int)start;
 
+- (void)gsub:(NSMutableString *)target block:(NSString *(^)(OnigResult *result))block;
+
 - (NSString*)expression;
 
 @end
@@ -85,5 +87,7 @@ typedef enum {
 - (NSIndexSet*)indexesForName:(NSString*)name;
 - (NSString*)stringForName:(NSString*)name;
 - (NSArray*)stringsForName:(NSString*)name;
+
+- (NSString *)stringForReplacementTemplate:(NSString *)replacementTemplate;
 
 @end
