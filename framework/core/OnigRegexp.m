@@ -246,47 +246,80 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     }
 }
 
-- (void)gsub:(NSMutableString *)target block:(NSString *(^)(OnigResult *))block
+- (void)gsub:(NSMutableString *)target block:(NSString *(^)(OnigResult *, BOOL *))block
 {
-    NSUInteger start = 0;
-    OnigResult *result = [self search:target start:start];
+    [self gsub:target block:block range:NSMakeRange(0, [target length])];
+}
+
+- (void)gsub:(NSMutableString *)target block:(NSString *(^)(OnigResult *, BOOL *))block range:(NSRange)range
+{
+    NSUInteger start = range.location;
+    NSUInteger end = NSMaxRange(range);
+    OnigResult *result = [self search:target start:start end:end];
+    NSRange resultRange = [result bodyRange];
+    start = resultRange.location;
+    BOOL stop = NO;
     while (result)
     {
-        NSString *replacement = block(result);
+        NSString *replacement = block(result, &stop);
         if ([replacement length])
         {
-            if ([result bodyRange].length)
-                [target replaceCharactersInRange:[result bodyRange] withString:replacement];
+            start += [replacement length];
+            end += [replacement length];
+            if (resultRange.length)
+            {
+                [target replaceCharactersInRange:resultRange withString:replacement];
+                end -= resultRange.length;
+            }
             else
-                [target insertString:replacement atIndex:[result bodyRange].location];
+            {
+                [target insertString:replacement atIndex:resultRange.location];
+            }
         }
         else
         {
-            if ([result bodyRange].length)
-                [target deleteCharactersInRange:[result bodyRange]];
+            if (resultRange.length)
+            {
+                [target deleteCharactersInRange:resultRange];
+                end -= resultRange.length;
+            }
             else
+            {
                 // force advancement of start to avoid infinite loops when the regexp matches zero width and the replacement is nil
                 ++start;
+            }
         }
-        start += [replacement length];
-        result = [self search:target start:start];
+        if (stop)
+            return;
+        result = [self search:target start:start end:end];
+        resultRange = [result bodyRange];
+        start = resultRange.location;
     }
+}
+
+- (void)sub:(NSMutableString *)target string:(NSString *)string
+{
+    [self sub:target string:string range:NSMakeRange(0, [target length])];
+}
+
+- (void)sub:(NSMutableString *)target string:(NSString *)string range:(NSRange)range
+{
+    [self gsub:target block:^NSString *(OnigResult *result, BOOL *stop) {
+        *stop = YES;
+        return [result stringForReplacementTemplate:string];
+    } range:range];
 }
 
 - (void)gsub:(NSMutableString *)target string:(NSString *)string
 {
-    NSUInteger start = 0;
-    NSUInteger length = [string length];
-    OnigResult *result = [self search:target start:start];
-    while (result)
-    {
-        if (length)
-            [target replaceCharactersInRange:[result bodyRange] withString:string];
-        else
-            [target deleteCharactersInRange:[result bodyRange]];
-        start += length;
-        result = [self search:target start:start];
-    }
+    [self gsub:target string:string range:NSMakeRange(0, [target length])];
+}
+
+- (void)gsub:(NSMutableString *)target string:(NSString *)string range:(NSRange)range
+{
+    [self gsub:target block:^NSString *(OnigResult *result, BOOL *stop) {
+        return [result stringForReplacementTemplate:string];
+    } range:range];
 }
 
 - (NSString*)expression
@@ -458,23 +491,29 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 - (NSString *)stringForReplacementTemplate:(NSString *)replacementTemplate
 {
     NSMutableString *replacement = [replacementTemplate mutableCopy];
-    [_numberedCapturesRegexp gsub:replacement block:^NSString *(OnigResult *result) {
+    [_numberedCapturesRegexp gsub:replacement block:^NSString *(OnigResult *result, BOOL *stop) {
         int captureNumber = [[result stringAt:1] intValue];
         if (captureNumber >= 0 && [self count] > captureNumber)
             return [self stringAt:captureNumber];
         else
             return nil;
     }];
-    [_escapedDollarSignsRegexp gsub:replacement string:@"$"];
-    [_escapedNewlinesRegexp gsub:replacement string:@"\n"];
-    [_escapedTabsRegexp gsub:replacement string:@"\t"];
+    [_escapedDollarSignsRegexp gsub:replacement block:^NSString *(OnigResult *result, BOOL *stop) {
+        return @"$";
+    }];
+    [_escapedNewlinesRegexp gsub:replacement block:^NSString *(OnigResult *result, BOOL *stop) {
+        return @"\n";
+    }];
+    [_escapedTabsRegexp gsub:replacement block:^NSString *(OnigResult *result, BOOL *stop) {
+        return @"\t";
+    }];
     
     __block _caseFoldingLock caseFoldingLock = _caseFoldingLockNone;
     __block _caseFoldingNext caseFoldingNext = _caseFoldingNextNone;
     __block NSUInteger pendingCaseFoldingLockStart = 0;
     __block NSUInteger pendingCaseFoldingNextOffset = 0;
     
-    [_caseFoldingRegexp gsub:replacement block:^NSString *(OnigResult *result) {
+    [_caseFoldingRegexp gsub:replacement block:^NSString *(OnigResult *result, BOOL *stop) {
         char caseFoldingIdentifierChar = *[[result stringAt:1] UTF8String];
         if (caseFoldingIdentifierChar == _caseFoldingLockNone || caseFoldingIdentifierChar == _caseFoldingLockUpper || caseFoldingIdentifierChar == _caseFoldingLockLower)
         {
