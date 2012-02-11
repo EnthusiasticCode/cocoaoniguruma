@@ -34,48 +34,6 @@ typedef enum
     _caseFoldingNextLower = 'l',
 } _caseFoldingNext;
 
-static const void *_cStringWrapperKey;
-
-@interface CStringWrapper : NSObject
-{
-    char *_cString;
-}
-- (id)initWithString:(NSString *)string encoding:(NSStringEncoding)encoding;
-- (const char *)cString;
-@end
-
-@implementation CStringWrapper
-
-- (id)initWithString:(NSString *)string encoding:(NSStringEncoding)encoding
-{
-    self = [super init];
-    if (!self)
-        return nil;
-    NSUInteger length = [string maximumLengthOfBytesUsingEncoding:encoding] + 1;
-    if (!length)
-        return nil;
-    _cString = malloc(length * sizeof(char));
-    if (![string getCString:_cString maxLength:length encoding:encoding])
-    {
-        free(_cString);
-        return nil;
-    }
-    return self;
-}
-
-- (void)dealloc
-{
-    free(_cString);
-}
-
-- (const char *)cString
-{
-    return _cString;
-}
-
-@end
-
-
 @interface OnigResult (Private)
 - (id)initWithRegexp:(OnigRegexp*)expression region:(OnigRegion*)region target:(NSString*)target;
 
@@ -92,7 +50,7 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 {
     if (self != [OnigRegexp class])
         return;
-    _numberedCapturesRegexp = [OnigRegexp compile:@"$([1-9])"];
+    _numberedCapturesRegexp = [OnigRegexp compile:@"\\$([0-9])"];
     _escapedDollarSignsRegexp = [OnigRegexp compile:@"\\$"];
     _escapedNewlinesRegexp = [OnigRegexp compile:@"\\\\n"];
     _escapedTabsRegexp = [OnigRegexp compile:@"\\\\t"];
@@ -234,13 +192,8 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     if (end < 0) end = [target length];
     
     OnigRegion* region = onig_region_new();
-    CStringWrapper *wrapper = objc_getAssociatedObject(target, _cStringWrapperKey);
-    if (!wrapper)
-    {
-        wrapper = [[CStringWrapper alloc] initWithString:target encoding:STRING_ENCODING];
-        objc_setAssociatedObject(target, _cStringWrapperKey, wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    const UChar* str = (const UChar*)[wrapper cString];
+
+    const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
     
     int status = onig_search(_entity,
                              str,
@@ -274,13 +227,8 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     if (!target) return nil;
     
     OnigRegion* region = onig_region_new();
-    CStringWrapper *wrapper = objc_getAssociatedObject(target, _cStringWrapperKey);
-    if (!wrapper)
-    {
-        wrapper = [[CStringWrapper alloc] initWithString:target encoding:STRING_ENCODING];
-        objc_setAssociatedObject(target, _cStringWrapperKey, wrapper, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    }
-    const UChar* str = (const UChar*)[wrapper cString];
+
+    const UChar* str = (const UChar*)[target cStringUsingEncoding:STRING_ENCODING];
     
     int status = onig_match(_entity,
                             str,
@@ -305,10 +253,21 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
     while (result)
     {
         NSString *replacement = block(result);
-        if (replacement)
-            [target replaceCharactersInRange:[result bodyRange] withString:replacement];
+        if ([replacement length])
+        {
+            if ([result bodyRange].length)
+                [target replaceCharactersInRange:[result bodyRange] withString:replacement];
+            else
+                [target insertString:replacement atIndex:[result bodyRange].location];
+        }
         else
-            [target deleteCharactersInRange:[result bodyRange]];            
+        {
+            if ([result bodyRange].length)
+                [target deleteCharactersInRange:[result bodyRange]];
+            else
+                // force advancement of start to avoid infinite loops when the regexp matches zero width and the replacement is nil
+                ++start;
+        }
         start += [replacement length];
         result = [self search:target start:start];
     }
