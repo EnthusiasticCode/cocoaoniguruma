@@ -50,11 +50,12 @@ int co_name_callback(const OnigUChar* name, const OnigUChar* end, int ngroups, i
 {
     if (self != [OnigRegexp class])
         return;
-    _numberedCapturesRegexp = [OnigRegexp compile:@"\\$([0-9])"];
+    _numberedCapturesRegexp = [OnigRegexp compile:@"\\$([0-9])" options:OnigOptionCaptureGroup];
     _escapedDollarSignsRegexp = [OnigRegexp compile:@"\\$"];
     _escapedNewlinesRegexp = [OnigRegexp compile:@"\\\\n"];
     _escapedTabsRegexp = [OnigRegexp compile:@"\\\\t"];
-    _caseFoldingRegexp = [OnigRegexp compile:@"\\([ULEul])"];
+    _caseFoldingRegexp = [OnigRegexp compile:@"\\\\([ULEul])" options:OnigOptionCaptureGroup];
+    ECASSERT(_numberedCapturesRegexp && _escapedDollarSignsRegexp && _escapedNewlinesRegexp && _escapedTabsRegexp && _caseFoldingRegexp);
 }
 
 - (id)initWithEntity:(regex_t*)entity expression:(NSString*)expression
