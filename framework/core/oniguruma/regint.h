@@ -95,12 +95,14 @@
 #define USE_FIND_LONGEST_SEARCH_ALL_OF_RANGE
 /* #define USE_COMBINATION_EXPLOSION_CHECK */     /* (X*)* */
 
-/* #define USE_MULTI_THREAD_SYSTEM */
-#define THREAD_SYSTEM_INIT      /* depend on thread system */
-#define THREAD_SYSTEM_END       /* depend on thread system */
-#define THREAD_ATOMIC_START     /* depend on thread system */
-#define THREAD_ATOMIC_END       /* depend on thread system */
-#define THREAD_PASS             /* depend on thread system */
+#define USE_MULTI_THREAD_SYSTEM
+#include <pthread.h>
+extern pthread_mutex_t globalLock;
+#define THREAD_SYSTEM_INIT      pthread_mutexattr_t mta; pthread_mutexattr_init(&mta); pthread_mutexattr_settype(&mta, PTHREAD_MUTEX_RECURSIVE); pthread_mutex_init(&globalLock, &mta);
+#define THREAD_SYSTEM_END       pthread_mutex_destroy(&globalLock);
+#define THREAD_ATOMIC_START     pthread_mutex_lock(&globalLock);
+#define THREAD_ATOMIC_END       pthread_mutex_unlock(&globalLock);
+#define THREAD_PASS             struct timespec t = { 0, 0 }; nanosleep(&t, NULL);
 #define xmalloc     malloc
 #define xrealloc    realloc
 #define xcalloc     calloc

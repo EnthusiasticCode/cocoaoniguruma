@@ -29,6 +29,8 @@
 
 #include "regint.h"
 
+pthread_mutex_t globalLock;
+
 static void
 conv_ext0be32(const UChar* s, const UChar* end, UChar* conv)
 {
