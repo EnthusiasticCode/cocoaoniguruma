@@ -29,6 +29,8 @@
 
 #include "regint.h"
 
+pthread_mutex_t globalLock;
+
 #define USE_MATCH_RANGE_MUST_BE_INSIDE_OF_SPECIFIED_RANGE
 
 #ifdef USE_CRNL_AS_LINE_TERMINATOR

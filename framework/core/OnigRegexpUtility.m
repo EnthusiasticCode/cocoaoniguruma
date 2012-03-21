@@ -7,19 +7,19 @@ typedef NSString* (*ReplaceCallback)(OnigResult*, void*, SEL);
 
 NSString* stringReplaceCallback(OnigResult* res, void* str, SEL sel)
 {
-    return (NSString*)str;
+    return (__bridge NSString*)str;
 } 
 
 NSString* selectorReplaceCallback(OnigResult* res, void* str, SEL sel)
 {
-    id object = str;
+    id object = (__bridge id)str;
     return [object performSelector:sel withObject:res];
 } 
 
 #if defined(NS_BLOCKS_AVAILABLE)
 NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
 {
-    NSString* (^block)(OnigResult*) = (NSString* (^)(OnigResult*))str;
+    NSString* (^block)(OnigResult*) = (__bridge NSString* (^)(OnigResult*))str;
     return block(res);
 } 
 #endif
@@ -97,7 +97,7 @@ NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
         }
         else if (limit == 1) {
             if ([target length] == 0) return [NSArray array];
-            return [NSArray arrayWithObjects:[[target copy] autorelease], nil];
+            return [NSArray arrayWithObjects:[target copy], nil];
         }
         i = 1;
     }
@@ -164,29 +164,29 @@ NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     
     OnigResult* res = [pattern search:self];
     if (res) {
-        NSMutableString* s = [[self mutableCopy] autorelease];
+        NSMutableString* s = [self mutableCopy];
         [s replaceCharactersInRange:[res bodyRange] withString:cp(res, data, sel)];
         return s;
     }
     else {
-        return [[self mutableCopy] autorelease];
+        return [self mutableCopy];
     }
 }
 
 - (NSString*)replaceByRegexp:(id)pattern with:(NSString*)string
 {
-    return [self __replaceByRegexp:pattern withCallback:stringReplaceCallback data:string selector:Nil];
+    return [self __replaceByRegexp:pattern withCallback:stringReplaceCallback data:(__bridge void *)string selector:Nil];
 }
 
 - (NSString*)replaceByRegexp:(id)pattern withCallback:(id)object selector:(SEL)sel
 {
-    return [self __replaceByRegexp:pattern withCallback:selectorReplaceCallback data:object selector:sel];
+    return [self __replaceByRegexp:pattern withCallback:selectorReplaceCallback data:(__bridge void *)object selector:sel];
 }
 
 #if defined(NS_BLOCKS_AVAILABLE)
 - (NSString*)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
 {
-    return [self __replaceByRegexp:pattern withCallback:blockReplaceCallback data:block selector:Nil];
+    return [self __replaceByRegexp:pattern withCallback:blockReplaceCallback data:(__bridge void *)block selector:Nil];
 }
 #endif
 
@@ -202,7 +202,7 @@ NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     
     OnigResult* res = [pattern search:self];
     if (!res) {
-        return [[self mutableCopy] autorelease];
+        return [self mutableCopy];
     }
     
     NSMutableString* s = [NSMutableString string];
@@ -234,18 +234,18 @@ NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
 
 - (NSString*)replaceAllByRegexp:(id)pattern with:(NSString*)string
 {
-    return [self __replaceAllByRegexp:pattern withCallback:stringReplaceCallback data:string selector:Nil];
+    return [self __replaceAllByRegexp:pattern withCallback:stringReplaceCallback data:(__bridge void *)string selector:Nil];
 }
 
 - (NSString*)replaceAllByRegexp:(id)pattern withCallback:(id)object selector:(SEL)sel
 {
-    return [self __replaceAllByRegexp:pattern withCallback:selectorReplaceCallback data:object selector:sel];
+    return [self __replaceAllByRegexp:pattern withCallback:selectorReplaceCallback data:(__bridge void *)object selector:sel];
 }
 
 #if defined(NS_BLOCKS_AVAILABLE)
 - (NSString*)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
 {
-    return [self __replaceAllByRegexp:pattern withCallback:blockReplaceCallback data:block selector:Nil];
+    return [self __replaceAllByRegexp:pattern withCallback:blockReplaceCallback data:(__bridge void *)block selector:Nil];
 }
 #endif
 

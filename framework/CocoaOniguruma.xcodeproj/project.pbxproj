@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 44;
+	objectVersion = 46;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,12 +32,29 @@
 		7807AC520E2FBB8600A5AB6A /* st.h in Headers */ = {isa = PBXBuildFile; fileRef = 7807AC360E2FBB8600A5AB6A /* st.h */; };
 		78C5E1CD0E39CE5F00F62F5D /* OnigRegexpTest.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C5E1B70E39CDEE00F62F5D /* OnigRegexpTest.m */; };
 		78C5E21F0E39CF7300F62F5D /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* CocoaOniguruma.framework */; };
-		78C5E2310E39CFEA00F62F5D /* SenTestingKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C5E2300E39CFEA00F62F5D /* SenTestingKit.framework */; };
-		78C5E26C0E39D0BD00F62F5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C5E26B0E39D0BD00F62F5D /* Foundation.framework */; };
 		78C5E3B10E39E38C00F62F5D /* CocoaOniguruma.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DC2EF5B0486A6940098B216 /* CocoaOniguruma.framework */; };
 		78C5E3D00E39E42000F62F5D /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 78C5E3C00E39E3D900F62F5D /* main.m */; };
-		78C5E3EC0E39E4B800F62F5D /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C5E26B0E39D0BD00F62F5D /* Foundation.framework */; };
 		8DC2EF530486A6940098B216 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C1666FE841158C02AAC07 /* InfoPlist.strings */; };
+		B757C0181519D0EA00AE6AC3 /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC1B0E2FBB8600A5AB6A /* OnigRegexp.m */; };
+		B757C0191519D0EA00AE6AC3 /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC1D0E2FBB8600A5AB6A /* OnigRegexpUtility.m */; };
+		B757C01B1519D12C00AE6AC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757C01A1519D12C00AE6AC3 /* Foundation.framework */; };
+		B757C0211519D3DB00AE6AC3 /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC220E2FBB8600A5AB6A /* ascii.c */; };
+		B757C0221519D3DB00AE6AC3 /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC230E2FBB8600A5AB6A /* unicode.c */; };
+		B757C0231519D3DB00AE6AC3 /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC250E2FBB8600A5AB6A /* utf16_le.c */; };
+		B757C0241519D3DB00AE6AC3 /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC290E2FBB8600A5AB6A /* regcomp.c */; };
+		B757C0251519D3DB00AE6AC3 /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC2A0E2FBB8600A5AB6A /* regenc.c */; };
+		B757C0261519D3DB00AE6AC3 /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC2C0E2FBB8600A5AB6A /* regerror.c */; };
+		B757C0271519D3DB00AE6AC3 /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC2D0E2FBB8600A5AB6A /* regexec.c */; };
+		B757C0281519D3DB00AE6AC3 /* regext.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC2E0E2FBB8600A5AB6A /* regext.c */; };
+		B757C0291519D3DB00AE6AC3 /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC300E2FBB8600A5AB6A /* regparse.c */; };
+		B757C02A1519D3DB00AE6AC3 /* regsyntax.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC320E2FBB8600A5AB6A /* regsyntax.c */; };
+		B757C02B1519D3DB00AE6AC3 /* regtrav.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC330E2FBB8600A5AB6A /* regtrav.c */; };
+		B757C02C1519D3DB00AE6AC3 /* regversion.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC340E2FBB8600A5AB6A /* regversion.c */; };
+		B757C02D1519D3DB00AE6AC3 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 7807AC350E2FBB8600A5AB6A /* st.c */; };
+		B757C02F1519D3F900AE6AC3 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B757C02E1519D3F900AE6AC3 /* Foundation.framework */; };
+		B757C0301519D40900AE6AC3 /* OnigRegexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 7807AC1A0E2FBB8600A5AB6A /* OnigRegexp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B757C0311519D40900AE6AC3 /* OnigRegexpUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 7807AC1C0E2FBB8600A5AB6A /* OnigRegexpUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		B757C04B1519D53900AE6AC3 /* oniguruma.h in Headers */ = {isa = PBXBuildFile; fileRef = 7807AC280E2FBB8600A5AB6A /* oniguruma.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -59,7 +76,6 @@
 
 /* Begin PBXFileReference section */
 		089C1667FE841158C02AAC07 /* English */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; name = English; path = English.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		32DBCF5E0370ADEE00C91783 /* CocoaOniguruma_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CocoaOniguruma_Prefix.pch; sourceTree = "<group>"; };
 		7807AC1A0E2FBB8600A5AB6A /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
 		7807AC1B0E2FBB8600A5AB6A /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
 		7807AC1C0E2FBB8600A5AB6A /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
@@ -87,12 +103,13 @@
 		78C5E1B60E39CDEE00F62F5D /* OnigRegexpTest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = OnigRegexpTest.h; path = tests/OnigRegexpTest.h; sourceTree = "<group>"; };
 		78C5E1B70E39CDEE00F62F5D /* OnigRegexpTest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = OnigRegexpTest.m; path = tests/OnigRegexpTest.m; sourceTree = "<group>"; };
 		78C5E1E70E39CEBD00F62F5D /* UnitTest-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "UnitTest-Info.plist"; sourceTree = "<group>"; };
-		78C5E2300E39CFEA00F62F5D /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = /Developer/Library/Frameworks/SenTestingKit.framework; sourceTree = "<absolute>"; };
-		78C5E26B0E39D0BD00F62F5D /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		78C5E3A90E39E37F00F62F5D /* TestCommand */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = TestCommand; sourceTree = BUILT_PRODUCTS_DIR; };
 		78C5E3C00E39E3D900F62F5D /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = testcommand/main.m; sourceTree = "<group>"; };
 		8DC2EF5A0486A6940098B216 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8DC2EF5B0486A6940098B216 /* CocoaOniguruma.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = CocoaOniguruma.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		B757C00C1519D09500AE6AC3 /* libCocoaTouchOniguruma.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaTouchOniguruma.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		B757C01A1519D12C00AE6AC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
+		B757C02E1519D3F900AE6AC3 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS5.1.sdk/System/Library/Frameworks/Foundation.framework; sourceTree = DEVELOPER_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,7 +118,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				78C5E21F0E39CF7300F62F5D /* CocoaOniguruma.framework in Frameworks */,
-				78C5E2310E39CFEA00F62F5D /* SenTestingKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -109,7 +125,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78C5E3EC0E39E4B800F62F5D /* Foundation.framework in Frameworks */,
 				78C5E3B10E39E38C00F62F5D /* CocoaOniguruma.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,7 +133,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				78C5E26C0E39D0BD00F62F5D /* Foundation.framework in Frameworks */,
+				B757C01B1519D12C00AE6AC3 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		B757C0091519D09500AE6AC3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B757C02F1519D3F900AE6AC3 /* Foundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -131,6 +154,7 @@
 				8DC2EF5B0486A6940098B216 /* CocoaOniguruma.framework */,
 				78C5E1B10E39CDCE00F62F5D /* UnitTest.octest */,
 				78C5E3A90E39E37F00F62F5D /* TestCommand */,
+				B757C00C1519D09500AE6AC3 /* libCocoaTouchOniguruma.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -139,7 +163,6 @@
 			isa = PBXGroup;
 			children = (
 				08FB77AEFE84172EC02AAC07 /* Classes */,
-				32C88DFF0371C24200C91783 /* Other Sources */,
 				089C1665FE841158C02AAC07 /* Resources */,
 				0867D69AFE84028FC02AAC07 /* Frameworks */,
 				034768DFFF38A50411DB9C8B /* Products */,
@@ -150,8 +173,8 @@
 		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				78C5E26B0E39D0BD00F62F5D /* Foundation.framework */,
-				78C5E2300E39CFEA00F62F5D /* SenTestingKit.framework */,
+				B757C02E1519D3F900AE6AC3 /* Foundation.framework */,
+				B757C01A1519D12C00AE6AC3 /* Foundation.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -174,14 +197,6 @@
 				78C5E3DD0E39E45200F62F5D /* testcommand */,
 			);
 			name = Classes;
-			sourceTree = "<group>";
-		};
-		32C88DFF0371C24200C91783 /* Other Sources */ = {
-			isa = PBXGroup;
-			children = (
-				32DBCF5E0370ADEE00C91783 /* CocoaOniguruma_Prefix.pch */,
-			);
-			name = "Other Sources";
 			sourceTree = "<group>";
 		};
 		7807AC190E2FBB8600A5AB6A /* core */ = {
@@ -265,6 +280,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B757C00A1519D09500AE6AC3 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B757C0301519D40900AE6AC3 /* OnigRegexp.h in Headers */,
+				B757C0311519D40900AE6AC3 /* OnigRegexpUtility.h in Headers */,
+				B757C04B1519D53900AE6AC3 /* oniguruma.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
@@ -323,13 +348,33 @@
 			productReference = 8DC2EF5B0486A6940098B216 /* CocoaOniguruma.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		B757C00B1519D09500AE6AC3 /* CocoaTouchOniguruma */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B757C0161519D09500AE6AC3 /* Build configuration list for PBXNativeTarget "CocoaTouchOniguruma" */;
+			buildPhases = (
+				B757C0081519D09500AE6AC3 /* Sources */,
+				B757C0091519D09500AE6AC3 /* Frameworks */,
+				B757C00A1519D09500AE6AC3 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocoaTouchOniguruma;
+			productName = CocoaTouchOniguruma;
+			productReference = B757C00C1519D09500AE6AC3 /* libCocoaTouchOniguruma.a */;
+			productType = "com.apple.product-type.library.static";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
 		0867D690FE84028FC02AAC07 /* Project object */ = {
 			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
 			buildConfigurationList = 1DEB91B108733DA50010E9CD /* Build configuration list for PBXProject "CocoaOniguruma" */;
-			compatibilityVersion = "Xcode 3.0";
+			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -341,6 +386,7 @@
 			projectRoot = "";
 			targets = (
 				8DC2EF4F0486A6940098B216 /* CocoaOniguruma */,
+				B757C00B1519D09500AE6AC3 /* CocoaTouchOniguruma */,
 				78C5E1B00E39CDCE00F62F5D /* UnitTest */,
 				78C5E3A80E39E37F00F62F5D /* TestCommand */,
 			);
@@ -420,6 +466,28 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		B757C0081519D09500AE6AC3 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B757C0211519D3DB00AE6AC3 /* ascii.c in Sources */,
+				B757C0221519D3DB00AE6AC3 /* unicode.c in Sources */,
+				B757C0231519D3DB00AE6AC3 /* utf16_le.c in Sources */,
+				B757C0241519D3DB00AE6AC3 /* regcomp.c in Sources */,
+				B757C0251519D3DB00AE6AC3 /* regenc.c in Sources */,
+				B757C0261519D3DB00AE6AC3 /* regerror.c in Sources */,
+				B757C0271519D3DB00AE6AC3 /* regexec.c in Sources */,
+				B757C0281519D3DB00AE6AC3 /* regext.c in Sources */,
+				B757C0291519D3DB00AE6AC3 /* regparse.c in Sources */,
+				B757C02A1519D3DB00AE6AC3 /* regsyntax.c in Sources */,
+				B757C02B1519D3DB00AE6AC3 /* regtrav.c in Sources */,
+				B757C02C1519D3DB00AE6AC3 /* regversion.c in Sources */,
+				B757C02D1519D3DB00AE6AC3 /* st.c in Sources */,
+				B757C0181519D0EA00AE6AC3 /* OnigRegexp.m in Sources */,
+				B757C0191519D0EA00AE6AC3 /* OnigRegexpUtility.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -455,12 +523,9 @@
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = CocoaOniguruma_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "$(HOME)/Library/Frameworks";
 				PRODUCT_NAME = CocoaOniguruma;
@@ -476,10 +541,8 @@
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				FRAMEWORK_VERSION = A;
-				GCC_ENABLE_OBJC_GC = supported;
 				GCC_MODEL_TUNING = G5;
-				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = CocoaOniguruma_Prefix.pch;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = Info.plist;
 				INSTALL_PATH = "@executable_path/../Frameworks";
 				PRODUCT_NAME = CocoaOniguruma;
@@ -490,12 +553,12 @@
 		1DEB91B208733DA50010E9CD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ONLY_ACTIVE_ARCH_PRE_XCODE_3_1)";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				ONLY_ACTIVE_ARCH_PRE_XCODE_3_1 = "$(NATIVE_ARCH_ACTUAL)";
-				PREBINDING = NO;
+				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = "";
 			};
 			name = Debug;
@@ -503,14 +566,13 @@
 		1DEB91B308733DA50010E9CD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ARCHS = "$(ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1)";
-				ARCHS_STANDARD_32_64_BIT_PRE_XCODE_3_1 = "x86_64 i386 ppc";
+				ARCHS = "$(ARCHS_STANDARD_32_64_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
 				DEPLOYMENT_LOCATION = NO;
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INSTALL_PATH = "";
-				PREBINDING = NO;
 				SDKROOT = "";
 			};
 			name = Release;
@@ -526,12 +588,12 @@
 					"\"$(SRCROOT)/build/Debug\"",
 				);
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTest-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -540,7 +602,6 @@
 					"-framework",
 					SenTestingKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UnitTest;
 				WRAPPER_EXTENSION = octest;
 			};
@@ -557,11 +618,11 @@
 					/Developer/Library/Frameworks,
 					"\"$(SRCROOT)/build/Debug\"",
 				);
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/Cocoa.framework/Headers/Cocoa.h";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "UnitTest-Info.plist";
 				INSTALL_PATH = "$(USER_LIBRARY_DIR)/Bundles";
 				OTHER_LDFLAGS = (
@@ -570,7 +631,6 @@
 					"-framework",
 					SenTestingKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = UnitTest;
 				WRAPPER_EXTENSION = octest;
 				ZERO_LINK = NO;
@@ -583,11 +643,11 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
-				GCC_ENABLE_FIX_AND_CONTINUE = YES;
 				GCC_MODEL_TUNING = G5;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/bin;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -595,7 +655,6 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = TestCommand;
 			};
 			name = Debug;
@@ -606,10 +665,10 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				GCC_ENABLE_FIX_AND_CONTINUE = NO;
 				GCC_MODEL_TUNING = G5;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INSTALL_PATH = /usr/local/bin;
 				OTHER_LDFLAGS = (
 					"-framework",
@@ -617,9 +676,52 @@
 					"-framework",
 					AppKit,
 				);
-				PREBINDING = NO;
 				PRODUCT_NAME = TestCommand;
 				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		B757C0141519D09500AE6AC3 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/CocoaTouchOniguruma.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+			};
+			name = Debug;
+		};
+		B757C0151519D09500AE6AC3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				COPY_PHASE_STRIP = YES;
+				DSTROOT = /tmp/CocoaTouchOniguruma.dst;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_LDFLAGS = "-ObjC";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
 		};
@@ -658,6 +760,15 @@
 			buildConfigurations = (
 				78C5E3AB0E39E37F00F62F5D /* Debug */,
 				78C5E3AC0E39E37F00F62F5D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		B757C0161519D09500AE6AC3 /* Build configuration list for PBXNativeTarget "CocoaTouchOniguruma" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				B757C0141519D09500AE6AC3 /* Debug */,
+				B757C0151519D09500AE6AC3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
