@@ -5553,6 +5553,8 @@ onig_new(regex_t** reg, const UChar* pattern, const UChar* pattern_end,
 }
 
 
+pthread_mutex_t globalLock;
+
 extern int
 onig_init(void)
 {
