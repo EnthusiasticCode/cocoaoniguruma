@@ -2,6 +2,8 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "OnigRegexpUtility.h"
+#import "OnigRegexp.h"
+#import "oniguruma/oniguruma.h"
 
 typedef NSString* (*OnigReplaceCallback)(OnigResult*, void*, SEL);
 
@@ -88,11 +90,11 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
         }
     }
     
-    int i = 0;
-    int limit = 0;
+    NSInteger i = 0;
+    NSInteger limit = 0;
     
     if (limitNum) {
-        limit = [limitNum intValue];
+        limit = [limitNum unsignedIntegerValue];
         if (limit <=0) {
             limitNum = nil;
         }
@@ -107,15 +109,15 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     }
     
     NSMutableArray* array = [NSMutableArray array];
-    int start = 0;
-    int begin = 0;
+    NSUInteger start = 0;
+    NSUInteger begin = 0;
     BOOL lastNull = NO;
     
     OnigResult* res;
     while ((res = [pattern search:target start:start])) {
         NSRange range = [res bodyRange];
-        int end = range.location;
-        int right = NSMaxRange(range);
+        NSUInteger end = range.location;
+        NSUInteger right = NSMaxRange(range);
         
         if (start == end && range.length == 0) {
             if ([target length] == 0) {
@@ -214,11 +216,11 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     }
     
     NSMutableString* s = [NSMutableString string];
-    int offset = 0;
+    NSUInteger offset = 0;
     
     do {
         NSRange range = [res bodyRange];
-        int len = range.location-offset;
+        NSInteger len = range.location-offset;
         if (len > 0) [s appendString:[self substringWithRange:NSMakeRange(offset, len)]];
         [s appendString:callback(res, data, sel)];
         

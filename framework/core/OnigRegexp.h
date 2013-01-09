@@ -2,36 +2,31 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import <Foundation/Foundation.h>
-#import "oniguruma.h"
-#import "OnigRegexpUtility.h"
-
+#import <CocoaOniguruma/OnigRegexpUtility.h>
 
 @class OnigResult;
 
+
 typedef enum {
-    OnigOptionNone = ONIG_OPTION_NONE,
-    OnigOptionIgnorecase = ONIG_OPTION_IGNORECASE,
-    OnigOptionExtend = ONIG_OPTION_EXTEND,
-    OnigOptionMultiline = ONIG_OPTION_MULTILINE,
-    OnigOptionSingleline = ONIG_OPTION_SINGLELINE,
-    OnigOptionFindLongest = ONIG_OPTION_FIND_LONGEST,
-    OnigOptionFindNotEmpty = ONIG_OPTION_FIND_NOT_EMPTY,
-    OnigOptionNegateSingleLine = ONIG_OPTION_NEGATE_SINGLELINE,
-    OnigOptionDontCaptureGroup = ONIG_OPTION_DONT_CAPTURE_GROUP,
-    OnigOptionCaptureGroup = ONIG_OPTION_CAPTURE_GROUP,
+    OnigOptionNone = 0U,
+    OnigOptionIgnorecase = 1U,
+    OnigOptionExtend = OnigOptionIgnorecase << 1,
+    OnigOptionMultiline = OnigOptionExtend << 1,
+    OnigOptionSingleline = OnigOptionMultiline << 1,
+    OnigOptionFindLongest = OnigOptionSingleline << 1,
+    OnigOptionFindNotEmpty = OnigOptionFindLongest << 1,
+    OnigOptionNegateSingleLine = OnigOptionFindNotEmpty << 1,
+    OnigOptionDontCaptureGroup = OnigOptionNegateSingleLine << 1,
+    OnigOptionCaptureGroup = OnigOptionDontCaptureGroup << 1,
     
     /* options (search time) */
-    OnigOptionNotbol = ONIG_OPTION_NOTBOL,
-    OnigOptionNoteol = ONIG_OPTION_NOTEOL,
-    OnigOptionPosixRegion = ONIG_OPTION_POSIX_REGION,
-    OnigOptionMaxbit = ONIG_OPTION_MAXBIT
+    OnigOptionNotbol = OnigOptionCaptureGroup << 1,
+    OnigOptionNoteol = OnigOptionNotbol << 1,
+    OnigOptionPosixRegion = OnigOptionNoteol << 1,
+    OnigOptionMaxbit = OnigOptionPosixRegion,
 } OnigOption;
 
 @interface OnigRegexp : NSObject
-{
-    regex_t* _entity;
-    NSString* _expression;
-}
 
 + (OnigRegexp*)compile:(NSString*)expression;
 + (OnigRegexp*)compile:(NSString*)expression error:(NSError **)error;
@@ -45,12 +40,12 @@ typedef enum {
 + (OnigRegexp*)compile:(NSString*)expression options:(OnigOption)options error:(NSError **)error;
 
 - (OnigResult*)search:(NSString*)target;
-- (OnigResult*)search:(NSString*)target start:(int)start;
-- (OnigResult*)search:(NSString*)target start:(int)start end:(int)end;
+- (OnigResult*)search:(NSString*)target start:(NSUInteger)start;
+- (OnigResult*)search:(NSString*)target start:(NSUInteger)start end:(NSInteger)end;
 - (OnigResult*)search:(NSString*)target range:(NSRange)range;
 
 - (OnigResult*)match:(NSString*)target;
-- (OnigResult*)match:(NSString*)target start:(int)start;
+- (OnigResult*)match:(NSString*)target start:(NSUInteger)start;
 
 - (NSUInteger)captureCount;
 - (NSString*)expression;
@@ -59,12 +54,6 @@ typedef enum {
 
 
 @interface OnigResult : NSObject
-{
-    OnigRegexp* _expression;
-    OnigRegion* _region;
-    NSString* _target;
-    NSMutableArray* _captureNames;
-}
 
 - (NSString*)target;
 

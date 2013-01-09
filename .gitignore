@@ -20,3 +20,4 @@ debuglog.*
 *.intermediate.manifest
 xcuserdata/
 
+project.xcworkspace

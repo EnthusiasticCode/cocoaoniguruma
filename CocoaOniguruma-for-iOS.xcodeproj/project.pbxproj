@@ -1,0 +1,376 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		5F37A78D169DEC0100D91E56 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F37A78C169DEC0100D91E56 /* Foundation.framework */; };
+		5F37A84C169DEF4000D91E56 /* OnigRegexp.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A849169DEF4000D91E56 /* OnigRegexp.m */; };
+		5F37A84D169DEF4000D91E56 /* OnigRegexpUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A84B169DEF4000D91E56 /* OnigRegexpUtility.m */; };
+		5F37A850169DF83A00D91E56 /* OnigRegexp.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F37A848169DEF4000D91E56 /* OnigRegexp.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5F37A851169DF83F00D91E56 /* OnigRegexpUtility.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F37A84A169DEF4000D91E56 /* OnigRegexpUtility.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5F37A857169DF95500D91E56 /* regcomp.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A852169DF95500D91E56 /* regcomp.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A858169DF95500D91E56 /* regenc.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A853169DF95500D91E56 /* regenc.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A859169DF95500D91E56 /* regerror.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A854169DF95500D91E56 /* regerror.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A85A169DF95500D91E56 /* regexec.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A855169DF95500D91E56 /* regexec.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A85B169DF95500D91E56 /* regparse.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A856169DF95500D91E56 /* regparse.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A85F169DF97000D91E56 /* ascii.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A85D169DF96F00D91E56 /* ascii.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A860169DF97000D91E56 /* utf16_le.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A85E169DF96F00D91E56 /* utf16_le.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A862169DF97F00D91E56 /* unicode.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A861169DF97F00D91E56 /* unicode.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+		5F37A864169DF99A00D91E56 /* st.c in Sources */ = {isa = PBXBuildFile; fileRef = 5F37A863169DF99A00D91E56 /* st.c */; settings = {COMPILER_FLAGS = "-w -Xanalyzer -analyzer-disable-checker"; }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5F37A787169DEC0100D91E56 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "include/${PRODUCT_NAME}";
+			dstSubfolderSpec = 16;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5F37A789169DEC0100D91E56 /* libCocoaOniguruma.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libCocoaOniguruma.a; sourceTree = BUILT_PRODUCTS_DIR; };
+		5F37A78C169DEC0100D91E56 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		5F37A7EC169DED3900D91E56 /* Common.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Common.xcconfig; sourceTree = "<group>"; };
+		5F37A7EE169DED3900D91E56 /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
+		5F37A7EF169DED3900D91E56 /* Profile.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Profile.xcconfig; sourceTree = "<group>"; };
+		5F37A7F0169DED3900D91E56 /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
+		5F37A7F2169DED3900D91E56 /* Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = Application.xcconfig; sourceTree = "<group>"; };
+		5F37A7F3169DED3900D91E56 /* StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = StaticLibrary.xcconfig; sourceTree = "<group>"; };
+		5F37A7F5169DED3900D91E56 /* iOS-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Application.xcconfig"; sourceTree = "<group>"; };
+		5F37A7F6169DED3900D91E56 /* iOS-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-Base.xcconfig"; sourceTree = "<group>"; };
+		5F37A7F7169DED3900D91E56 /* iOS-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "iOS-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
+		5F37A7F9169DED3900D91E56 /* Mac-Application.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-Application.xcconfig"; sourceTree = "<group>"; };
+		5F37A7FA169DED3900D91E56 /* Mac-Base.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-Base.xcconfig"; sourceTree = "<group>"; };
+		5F37A7FB169DED3900D91E56 /* Mac-DynamicLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-DynamicLibrary.xcconfig"; sourceTree = "<group>"; };
+		5F37A7FC169DED3900D91E56 /* Mac-Framework.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-Framework.xcconfig"; sourceTree = "<group>"; };
+		5F37A7FD169DED3900D91E56 /* Mac-StaticLibrary.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = "Mac-StaticLibrary.xcconfig"; sourceTree = "<group>"; };
+		5F37A7FE169DED3900D91E56 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		5F37A848169DEF4000D91E56 /* OnigRegexp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexp.h; sourceTree = "<group>"; };
+		5F37A849169DEF4000D91E56 /* OnigRegexp.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexp.m; sourceTree = "<group>"; };
+		5F37A84A169DEF4000D91E56 /* OnigRegexpUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OnigRegexpUtility.h; sourceTree = "<group>"; };
+		5F37A84B169DEF4000D91E56 /* OnigRegexpUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OnigRegexpUtility.m; sourceTree = "<group>"; };
+		5F37A852169DF95500D91E56 /* regcomp.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regcomp.c; sourceTree = "<group>"; };
+		5F37A853169DF95500D91E56 /* regenc.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regenc.c; sourceTree = "<group>"; };
+		5F37A854169DF95500D91E56 /* regerror.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regerror.c; sourceTree = "<group>"; };
+		5F37A855169DF95500D91E56 /* regexec.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regexec.c; sourceTree = "<group>"; };
+		5F37A856169DF95500D91E56 /* regparse.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = regparse.c; sourceTree = "<group>"; };
+		5F37A85D169DF96F00D91E56 /* ascii.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = ascii.c; sourceTree = "<group>"; };
+		5F37A85E169DF96F00D91E56 /* utf16_le.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = utf16_le.c; sourceTree = "<group>"; };
+		5F37A861169DF97F00D91E56 /* unicode.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = unicode.c; sourceTree = "<group>"; };
+		5F37A863169DF99A00D91E56 /* st.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = st.c; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5F37A786169DEC0100D91E56 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F37A78D169DEC0100D91E56 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		5F37A77E169DEC0100D91E56 = {
+			isa = PBXGroup;
+			children = (
+				5F37A847169DEF2B00D91E56 /* CocoaOniguruma */,
+				5F37A78B169DEC0100D91E56 /* Frameworks */,
+				5F37A78A169DEC0100D91E56 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		5F37A78A169DEC0100D91E56 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A789169DEC0100D91E56 /* libCocoaOniguruma.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		5F37A78B169DEC0100D91E56 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7A3169DECA800D91E56 /* Apple */,
+				5F37A7A2169DEC9500D91E56 /* Third Party */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		5F37A7A2169DEC9500D91E56 /* Third Party */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7EA169DED3900D91E56 /* xcconfigs */,
+			);
+			name = "Third Party";
+			sourceTree = "<group>";
+		};
+		5F37A7A3169DECA800D91E56 /* Apple */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A78C169DEC0100D91E56 /* Foundation.framework */,
+			);
+			name = Apple;
+			sourceTree = "<group>";
+		};
+		5F37A7EA169DED3900D91E56 /* xcconfigs */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7EB169DED3900D91E56 /* Base */,
+				5F37A7F4169DED3900D91E56 /* iOS */,
+				5F37A7F8169DED3900D91E56 /* Mac OS X */,
+				5F37A7FE169DED3900D91E56 /* README.md */,
+			);
+			path = xcconfigs;
+			sourceTree = "<group>";
+		};
+		5F37A7EB169DED3900D91E56 /* Base */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7EC169DED3900D91E56 /* Common.xcconfig */,
+				5F37A7ED169DED3900D91E56 /* Configurations */,
+				5F37A7F1169DED3900D91E56 /* Targets */,
+			);
+			path = Base;
+			sourceTree = "<group>";
+		};
+		5F37A7ED169DED3900D91E56 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7EE169DED3900D91E56 /* Debug.xcconfig */,
+				5F37A7EF169DED3900D91E56 /* Profile.xcconfig */,
+				5F37A7F0169DED3900D91E56 /* Release.xcconfig */,
+			);
+			path = Configurations;
+			sourceTree = "<group>";
+		};
+		5F37A7F1169DED3900D91E56 /* Targets */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7F2169DED3900D91E56 /* Application.xcconfig */,
+				5F37A7F3169DED3900D91E56 /* StaticLibrary.xcconfig */,
+			);
+			path = Targets;
+			sourceTree = "<group>";
+		};
+		5F37A7F4169DED3900D91E56 /* iOS */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7F5169DED3900D91E56 /* iOS-Application.xcconfig */,
+				5F37A7F6169DED3900D91E56 /* iOS-Base.xcconfig */,
+				5F37A7F7169DED3900D91E56 /* iOS-StaticLibrary.xcconfig */,
+			);
+			path = iOS;
+			sourceTree = "<group>";
+		};
+		5F37A7F8169DED3900D91E56 /* Mac OS X */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A7F9169DED3900D91E56 /* Mac-Application.xcconfig */,
+				5F37A7FA169DED3900D91E56 /* Mac-Base.xcconfig */,
+				5F37A7FB169DED3900D91E56 /* Mac-DynamicLibrary.xcconfig */,
+				5F37A7FC169DED3900D91E56 /* Mac-Framework.xcconfig */,
+				5F37A7FD169DED3900D91E56 /* Mac-StaticLibrary.xcconfig */,
+			);
+			path = "Mac OS X";
+			sourceTree = "<group>";
+		};
+		5F37A847169DEF2B00D91E56 /* CocoaOniguruma */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A848169DEF4000D91E56 /* OnigRegexp.h */,
+				5F37A849169DEF4000D91E56 /* OnigRegexp.m */,
+				5F37A84A169DEF4000D91E56 /* OnigRegexpUtility.h */,
+				5F37A84B169DEF4000D91E56 /* OnigRegexpUtility.m */,
+				5F37A84E169DEF5C00D91E56 /* oniguruma */,
+			);
+			name = CocoaOniguruma;
+			path = framework/core;
+			sourceTree = "<group>";
+		};
+		5F37A84E169DEF5C00D91E56 /* oniguruma */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A85C169DF95A00D91E56 /* enc */,
+				5F37A852169DF95500D91E56 /* regcomp.c */,
+				5F37A853169DF95500D91E56 /* regenc.c */,
+				5F37A854169DF95500D91E56 /* regerror.c */,
+				5F37A855169DF95500D91E56 /* regexec.c */,
+				5F37A856169DF95500D91E56 /* regparse.c */,
+				5F37A863169DF99A00D91E56 /* st.c */,
+			);
+			path = oniguruma;
+			sourceTree = "<group>";
+		};
+		5F37A85C169DF95A00D91E56 /* enc */ = {
+			isa = PBXGroup;
+			children = (
+				5F37A85D169DF96F00D91E56 /* ascii.c */,
+				5F37A861169DF97F00D91E56 /* unicode.c */,
+				5F37A85E169DF96F00D91E56 /* utf16_le.c */,
+			);
+			path = enc;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		5F37A84F169DF83400D91E56 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F37A850169DF83A00D91E56 /* OnigRegexp.h in Headers */,
+				5F37A851169DF83F00D91E56 /* OnigRegexpUtility.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5F37A788169DEC0100D91E56 /* CocoaOniguruma */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5F37A797169DEC0100D91E56 /* Build configuration list for PBXNativeTarget "CocoaOniguruma" */;
+			buildPhases = (
+				5F37A785169DEC0100D91E56 /* Sources */,
+				5F37A786169DEC0100D91E56 /* Frameworks */,
+				5F37A787169DEC0100D91E56 /* CopyFiles */,
+				5F37A84F169DF83400D91E56 /* Headers */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CocoaOniguruma;
+			productName = CocoaOniguruma;
+			productReference = 5F37A789169DEC0100D91E56 /* libCocoaOniguruma.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		5F37A780169DEC0100D91E56 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0450;
+			};
+			buildConfigurationList = 5F37A783169DEC0100D91E56 /* Build configuration list for PBXProject "CocoaOniguruma-for-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 5F37A77E169DEC0100D91E56;
+			productRefGroup = 5F37A78A169DEC0100D91E56 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				5F37A788169DEC0100D91E56 /* CocoaOniguruma */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5F37A785169DEC0100D91E56 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5F37A84C169DEF4000D91E56 /* OnigRegexp.m in Sources */,
+				5F37A84D169DEF4000D91E56 /* OnigRegexpUtility.m in Sources */,
+				5F37A857169DF95500D91E56 /* regcomp.c in Sources */,
+				5F37A858169DF95500D91E56 /* regenc.c in Sources */,
+				5F37A859169DF95500D91E56 /* regerror.c in Sources */,
+				5F37A85A169DF95500D91E56 /* regexec.c in Sources */,
+				5F37A85B169DF95500D91E56 /* regparse.c in Sources */,
+				5F37A864169DF99A00D91E56 /* st.c in Sources */,
+				5F37A85F169DF97000D91E56 /* ascii.c in Sources */,
+				5F37A862169DF97F00D91E56 /* unicode.c in Sources */,
+				5F37A860169DF97000D91E56 /* utf16_le.c in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5F37A795169DEC0100D91E56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37A7EE169DED3900D91E56 /* Debug.xcconfig */;
+			buildSettings = {
+			};
+			name = Debug;
+		};
+		5F37A796169DEC0100D91E56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37A7F0169DED3900D91E56 /* Release.xcconfig */;
+			buildSettings = {
+			};
+			name = Release;
+		};
+		5F37A798169DEC0100D91E56 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37A7F7169DED3900D91E56 /* iOS-StaticLibrary.xcconfig */;
+			buildSettings = {
+				OTHER_CFLAGS = "";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		5F37A799169DEC0100D91E56 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37A7F7169DED3900D91E56 /* iOS-StaticLibrary.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		5F37A7FF169DED4D00D91E56 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37A7EF169DED3900D91E56 /* Profile.xcconfig */;
+			buildSettings = {
+			};
+			name = Profile;
+		};
+		5F37A800169DED4D00D91E56 /* Profile */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5F37A7F7169DED3900D91E56 /* iOS-StaticLibrary.xcconfig */;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Profile;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		5F37A783169DEC0100D91E56 /* Build configuration list for PBXProject "CocoaOniguruma-for-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F37A795169DEC0100D91E56 /* Debug */,
+				5F37A796169DEC0100D91E56 /* Release */,
+				5F37A7FF169DED4D00D91E56 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5F37A797169DEC0100D91E56 /* Build configuration list for PBXNativeTarget "CocoaOniguruma" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5F37A798169DEC0100D91E56 /* Debug */,
+				5F37A799169DEC0100D91E56 /* Release */,
+				5F37A800169DED4D00D91E56 /* Profile */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 5F37A780169DEC0100D91E56 /* Project object */;
+}

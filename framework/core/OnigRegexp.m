@@ -2,6 +2,7 @@
 // You can redistribute it and/or modify it under the new BSD license.
 
 #import "OnigRegexp.h"
+#import "oniguruma/oniguruma.h"
 
 
 #define CHAR_SIZE 2
@@ -33,6 +34,10 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
 
 
 @implementation OnigRegexp
+{
+	regex_t* _entity;
+	NSString* _expression;
+}
 
 - (id)initWithEntity:(regex_t*)entity expression:(NSString*)expression
 {
@@ -159,12 +164,12 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
     return [self search:target start:0 end:-1];
 }
 
-- (OnigResult*)search:(NSString*)target start:(int)start
+- (OnigResult*)search:(NSString*)target start:(NSUInteger)start
 {
     return [self search:target start:start end:-1];
 }
 
-- (OnigResult*)search:(NSString*)target start:(int)start end:(int)end
+- (OnigResult*)search:(NSString*)target start:(NSUInteger)start end:(NSInteger)end
 {
     if (!target) return nil;
     if (end < 0) end = [target length];
@@ -203,7 +208,7 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
     return [self match:target start:0];
 }
 
-- (OnigResult*)match:(NSString*)target start:(int)start
+- (OnigResult*)match:(NSString*)target start:(NSUInteger)start
 {
     if (!target) return nil;
     
@@ -249,6 +254,12 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
 
 
 @implementation OnigResult
+{
+	OnigRegexp* _expression;
+	OnigRegion* _region;
+	NSString* _target;
+	NSMutableArray* _captureNames;
+}
 
 - (id)initWithRegexp:(OnigRegexp*)expression region:(OnigRegion*)region target:(NSString*)target
 {
@@ -285,11 +296,6 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
     return _target;
 }
 
-- (int)size
-{
-    return [self count];
-}
-
 - (NSUInteger)count
 {
     return _region->num_regs;
@@ -303,7 +309,7 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
 - (NSArray*)strings
 {
     NSMutableArray* array = [NSMutableArray array];
-    int i, count;
+    NSUInteger i, count;
     for (i=0, count=[self count]; i<count; i++) {
         [array addObject:[self stringAt:i]];
     }
@@ -386,7 +392,7 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
 
 - (NSString*)stringForName:(NSString*)name
 {
-    int n = [self indexForName:name];
+    NSInteger n = [self indexForName:name];
     return n < 0 ? nil : [self stringAt:n];
 }
 
