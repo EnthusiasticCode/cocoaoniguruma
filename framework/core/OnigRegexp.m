@@ -14,6 +14,69 @@
 #define STRING_ENCODING NSUTF16LittleEndianStringEncoding
 #define ONIG_ENCODING ONIG_ENCODING_UTF16_LE
 
+typedef enum : char
+{
+    _caseFoldingLockNone = 'E',
+    _caseFoldingLockUpper = 'U',
+    _caseFoldingLockLower = 'L',
+} _caseFoldingLock;
+
+typedef enum : char
+{
+    _caseFoldingNextNone = 0,
+    _caseFoldingNextUpper = 'u',
+    _caseFoldingNextLower = 'l',
+} _caseFoldingNext;
+
+static OnigRegexp* numberedCapturesRegexp(void)
+{
+    static OnigRegexp* numberedCapturesRegexp = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        numberedCapturesRegexp = [OnigRegexp compile:@"\\$([0-9])" options:OnigOptionCaptureGroup];
+    });
+    return numberedCapturesRegexp;
+}
+
+static OnigRegexp* escapedDollarSignsRegexp(void)
+{
+    static OnigRegexp* escapedDollarSignsRegexp = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        escapedDollarSignsRegexp = [OnigRegexp compile:@"\\$"];
+    });
+    return escapedDollarSignsRegexp;
+}
+
+static OnigRegexp* escapedNewlinesRegexp(void)
+{
+    static OnigRegexp* escapedNewlinesRegexp = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        escapedNewlinesRegexp = [OnigRegexp compile:@"\\\\n"];
+    });
+    return escapedNewlinesRegexp;
+}
+
+static OnigRegexp* escapedTabsRegexp(void)
+{
+    static OnigRegexp* escapedTabsRegexp = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        escapedTabsRegexp = [OnigRegexp compile:@"\\\\t"];
+    });
+    return escapedTabsRegexp;
+}
+
+static OnigRegexp* caseFoldingRegexp(void)
+{
+    static OnigRegexp* caseFoldingRegexp = nil;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        caseFoldingRegexp = [OnigRegexp compile:@"\\\\([ULEul])" options:OnigOptionCaptureGroup];
+    });
+    return caseFoldingRegexp;
+}
 
 @interface OnigResult (Private)
 - (id)initWithRegexp:(OnigRegexp*)expression region:(OnigRegion*)region target:(NSString*)target;
@@ -407,6 +470,113 @@ static int captureNameCallback(const OnigUChar* name, const OnigUChar* end, int 
         [array addObject:[self stringAt:i]];
     }
     return array;
+}
+
+- (NSString *)stringForTemplate:(NSString *)template
+{
+    NSMutableString *replacement = [template mutableCopy];
+#if !__has_feature(objc_arc)
+    [replacement autorelease];
+#endif
+    
+    replacement = [replacement replaceAllByRegexp:numberedCapturesRegexp() withBlock:^ NSString* (OnigResult* result) {
+        NSInteger captureNumber = [[result stringAt:1] integerValue];
+        if (captureNumber >= 0 && (NSInteger)[self count] > captureNumber)
+            return [self stringAt:captureNumber];
+        else
+            return nil;
+    }];
+    replacement = [replacement replaceAllByRegexp:escapedDollarSignsRegexp() with:@"$"];
+    replacement = [replacement replaceAllByRegexp:escapedNewlinesRegexp() with:@"\n"];
+    replacement = [replacement replaceAllByRegexp:escapedTabsRegexp() with:@"\t"];
+    
+    __block _caseFoldingLock caseFoldingLock = _caseFoldingLockNone;
+    __block _caseFoldingNext caseFoldingNext = _caseFoldingNextNone;
+    __block NSUInteger pendingCaseFoldingLockStart = 0;
+    __block NSUInteger pendingCaseFoldingNextOffset = 0;
+    
+    replacement = [replacement replaceAllByRegexp:caseFoldingRegexp() withBlock:^ NSString* (OnigResult* result) {
+        char caseFoldingIdentifierChar = *[[result stringAt:1] UTF8String];
+        if (caseFoldingIdentifierChar == _caseFoldingLockNone || caseFoldingIdentifierChar == _caseFoldingLockUpper || caseFoldingIdentifierChar == _caseFoldingLockLower)
+        {
+            // The case folding modifier is already active, do nothing
+            if (caseFoldingIdentifierChar == caseFoldingLock)
+                return nil;
+            // The previous case folding lock modifier was none, do nothing
+            if (caseFoldingLock == _caseFoldingLockNone)
+            {
+                caseFoldingLock = caseFoldingIdentifierChar;
+                pendingCaseFoldingLockStart = [result bodyRange].location;
+                return nil;
+            }
+            NSRange pendingRange = NSMakeRange(pendingCaseFoldingLockStart, [result bodyRange].location - pendingCaseFoldingLockStart);
+            NSString *pendingString = [replacement substringWithRange:pendingRange];
+            if (caseFoldingLock == _caseFoldingLockUpper)
+                pendingString = [pendingString uppercaseString];
+            else
+                pendingString = [pendingString lowercaseString];
+            [replacement replaceCharactersInRange:pendingRange withString:pendingString];
+            caseFoldingLock = caseFoldingIdentifierChar;
+        }
+        else
+        {
+            // The case folding modifier is already active, do nothing
+            if (caseFoldingIdentifierChar == caseFoldingNext)
+                return nil;
+            // The previous case folding next modifier was none, do nothing
+            if (caseFoldingNext == _caseFoldingNextNone)
+            {
+                caseFoldingNext = caseFoldingIdentifierChar;
+                pendingCaseFoldingNextOffset = [result bodyRange].location;
+                return nil;
+            }
+            // Apply the pending case folding modifier
+            // Because the next type modifiers override the lock type modifiers, we need to apply the latter before the first
+            if (caseFoldingLock != _caseFoldingLockNone)
+            {
+                NSRange pendingRange = NSMakeRange(pendingCaseFoldingLockStart, [result bodyRange].location - pendingCaseFoldingLockStart);
+                NSString *pendingString = [replacement substringWithRange:pendingRange];
+                if (caseFoldingLock == _caseFoldingLockUpper)
+                    pendingString = [pendingString uppercaseString];
+                else
+                    pendingString = [pendingString lowercaseString];
+                [replacement replaceCharactersInRange:pendingRange withString:pendingString];
+                pendingCaseFoldingLockStart = [result bodyRange].location;
+            }
+            NSRange pendingRange = NSMakeRange(pendingCaseFoldingNextOffset, 1);
+            NSString *pendingCharacter = [replacement substringWithRange:pendingRange];
+            if (caseFoldingNext == _caseFoldingNextUpper)
+                pendingCharacter = [pendingCharacter uppercaseString];
+            else
+                pendingCharacter = [pendingCharacter lowercaseString];
+            [replacement replaceCharactersInRange:pendingRange withString:pendingCharacter];
+            caseFoldingNext = caseFoldingIdentifierChar;
+        }
+        return nil;
+    }];
+
+    // Take care of any pending modifiers
+    if (caseFoldingLock != _caseFoldingLockNone)
+    {
+        NSRange pendingRange = NSMakeRange(pendingCaseFoldingLockStart, [replacement length] - pendingCaseFoldingLockStart);
+        NSString *pendingString = [replacement substringWithRange:pendingRange];
+        if (caseFoldingLock == _caseFoldingLockUpper)
+            pendingString = [pendingString uppercaseString];
+        else
+            pendingString = [pendingString lowercaseString];
+        [replacement replaceCharactersInRange:pendingRange withString:pendingString];
+    }
+    if (caseFoldingNext != _caseFoldingNextNone && pendingCaseFoldingNextOffset != [replacement length])
+    {
+        NSRange pendingRange = NSMakeRange(pendingCaseFoldingNextOffset, 1);
+        NSString *pendingCharacter = [replacement substringWithRange:pendingRange];
+        if (caseFoldingNext == _caseFoldingNextUpper)
+            pendingCharacter = [pendingCharacter uppercaseString];
+        else
+            pendingCharacter = [pendingCharacter lowercaseString];
+        [replacement replaceCharactersInRange:pendingRange withString:pendingCharacter];
+    }
+    return replacement;
 }
 
 @end

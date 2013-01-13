@@ -27,4 +27,7 @@
 - (instancetype)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
 - (instancetype)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
 
+- (instancetype)replaceByRegexp:(id)pattern withTemplate:(NSString *)template;
+- (instancetype)replaceAllByRegexp:(id)pattern withTemplate:(NSString *)template;
+
 @end

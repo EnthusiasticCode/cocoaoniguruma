@@ -77,4 +77,6 @@ typedef enum {
 - (NSString*)stringForName:(NSString*)name;
 - (NSArray*)stringsForName:(NSString*)name;
 
+- (NSString *)stringForTemplate:(NSString *)template;
+
 @end

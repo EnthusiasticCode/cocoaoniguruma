@@ -25,12 +25,23 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     block = (NSString* (^)(OnigResult*))str;
 #endif
     return block(res);
-} 
+}
+
+static NSString* templateReplaceCallback(OnigResult* res, void* str, SEL sel)
+{
+    NSString* template = nil;
+#if __has_feature(objc_arc)
+    template = (__bridge NSString*)str;
+#else
+    template = (NSString *)str;
+#endif
+    return [res stringForTemplate:template];
+}
 
 @interface NSString (OnigRegexpNSStringUtilityPrivate)
 - (NSArray*)split:(id)pattern limit:(NSNumber*)limit;
-- (NSString*)replaceByRegexp:(id)pattern withCallback:(OnigReplaceCallback)cp data:(void*)data selector:(SEL)sel;
-- (NSString*)replaceAllByRegexp:(id)pattern withCallback:(OnigReplaceCallback)cp data:(void*)data selector:(SEL)sel;
+- (instancetype)replaceByRegexp:(id)pattern withCallback:(OnigReplaceCallback)cp data:(void*)data selector:(SEL)sel;
+- (instancetype)replaceAllByRegexp:(id)pattern withCallback:(OnigReplaceCallback)cp data:(void*)data selector:(SEL)sel;
 @end
 
 
@@ -162,7 +173,7 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     return array;
 }
 
-- (NSString*)replaceByRegexp:(id)pattern withCallback:(OnigReplaceCallback)callback data:(void*)data selector:(SEL)sel
+- (instancetype)replaceByRegexp:(id)pattern withCallback:(OnigReplaceCallback)callback data:(void*)data selector:(SEL)sel
 {
     if (![pattern isKindOfClass:[OnigRegexp class]]) {
         pattern = [OnigRegexp compile:(NSString*)pattern];
@@ -186,21 +197,26 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     }
 }
 
-- (NSString*)replaceByRegexp:(id)pattern with:(NSString*)string
+- (instancetype)replaceByRegexp:(id)pattern with:(NSString*)string
 {
     return [self replaceByRegexp:pattern withCallback:stringReplaceCallback data:(void*)string selector:Nil];
 }
 
-- (NSString*)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
+- (instancetype)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
 {
     return [self replaceByRegexp:pattern withCallback:blockReplaceCallback data:(void*)block selector:Nil];
+}
+
+- (instancetype)replaceByRegexp:(id)pattern withTemplate:(NSString *)template
+{
+    return [self replaceByRegexp:pattern withCallback:templateReplaceCallback data:(void*)template selector:Nil];
 }
 
 // 
 // This implementation is based on ruby 1.8.
 // 
 
-- (NSString*)replaceAllByRegexp:(id)pattern withCallback:(OnigReplaceCallback)callback data:(void*)data selector:(SEL)sel
+- (instancetype)replaceAllByRegexp:(id)pattern withCallback:(OnigReplaceCallback)callback data:(void*)data selector:(SEL)sel
 {
     if (![pattern isKindOfClass:[OnigRegexp class]]) {
         pattern = [OnigRegexp compile:(NSString*)pattern];
@@ -242,14 +258,19 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
     return s;
 }
 
-- (NSString*)replaceAllByRegexp:(id)pattern with:(NSString*)string
+- (instancetype)replaceAllByRegexp:(id)pattern with:(NSString*)string
 {
     return [self replaceAllByRegexp:pattern withCallback:stringReplaceCallback data:(void*)string selector:Nil];
 }
 
-- (NSString*)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
+- (instancetype)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
 {
     return [self replaceAllByRegexp:pattern withCallback:blockReplaceCallback data:(void*)block selector:Nil];
+}
+
+- (instancetype)replaceAllByRegexp:(id)pattern withTemplate:(NSString *)template
+{
+    return [self replaceAllByRegexp:pattern withCallback:templateReplaceCallback data:(void*)template selector:Nil];
 }
 
 @end
