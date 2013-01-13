@@ -21,25 +21,10 @@
 
 // based on ruby's gsub
 
-- (NSString*)replaceByRegexp:(id)pattern with:(NSString*)string;
-- (NSString*)replaceAllByRegexp:(id)pattern with:(NSString*)string;
+- (instancetype)replaceByRegexp:(id)pattern with:(NSString*)string;
+- (instancetype)replaceAllByRegexp:(id)pattern with:(NSString*)string;
 
-- (NSString*)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
-- (NSString*)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
-
-@end
-
-
-@interface NSMutableString (OnigRegexpUtility)
-
-// pattern is OnigRegexp or NSString
-
-// based on ruby's gsub
-
-- (NSMutableString*)replaceByRegexp:(id)pattern with:(NSString*)string;
-- (NSMutableString*)replaceAllByRegexp:(id)pattern with:(NSString*)string;
-
-- (NSMutableString*)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
-- (NSMutableString*)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
+- (instancetype)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
+- (instancetype)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block;
 
 @end

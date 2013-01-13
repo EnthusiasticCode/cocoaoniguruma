@@ -253,28 +253,3 @@ static NSString* blockReplaceCallback(OnigResult* res, void* str, SEL sel)
 }
 
 @end
-
-
-@implementation NSMutableString (OnigRegexpNSMutableStringUtility)
-
-- (NSMutableString*)replaceByRegexp:(id)pattern with:(NSString*)string
-{
-    return (NSMutableString*)[super replaceByRegexp:pattern with:string];
-}
-
-- (NSMutableString*)replaceAllByRegexp:(id)pattern with:(NSString*)string
-{
-    return (NSMutableString*)[super replaceAllByRegexp:pattern with:string];
-}
-
-- (NSMutableString*)replaceByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
-{
-    return (NSMutableString*)[super replaceByRegexp:pattern withBlock:block];
-}
-
-- (NSMutableString*)replaceAllByRegexp:(id)pattern withBlock:(NSString* (^)(OnigResult*))block
-{
-    return (NSMutableString*)[super replaceAllByRegexp:pattern withBlock:block];
-}
-
-@end
